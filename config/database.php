@@ -58,9 +58,16 @@ return [
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
-            'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
-            ]) : [],
+            'options' => extension_loaded('pdo_mysql')
+                ? (function () {
+                    // Avoid referencing deprecated PDO::MYSQL_ATTR_* constants on PHP 8.5+
+                    $options = [];
+                    if (defined('PDO::MYSQL_ATTR_SSL_CA') && env('MYSQL_ATTR_SSL_CA')) {
+                        $options[constant('PDO::MYSQL_ATTR_SSL_CA')] = env('MYSQL_ATTR_SSL_CA');
+                    }
+                    return array_filter($options);
+                })()
+                : [],
         ],
 
         'pgsql' => [
