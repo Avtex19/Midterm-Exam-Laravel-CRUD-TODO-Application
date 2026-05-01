@@ -2,11 +2,12 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Task;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreTaskRequest extends FormRequest
 {
+    use TaskRules;
+
     public function authorize(): bool
     {
         return true;
@@ -17,11 +18,6 @@ class StoreTaskRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
-            'status' => ['required', 'in:' . Task::STATUS_PENDING . ',' . Task::STATUS_DONE],
-            'deadline' => ['nullable', 'date'],
-        ];
+        return $this->taskRules();
     }
 }
