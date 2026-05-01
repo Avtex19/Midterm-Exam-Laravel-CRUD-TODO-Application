@@ -90,4 +90,30 @@ class TaskCrudTest extends TestCase
             'status' => Task::STATUS_DONE,
         ]);
     }
+
+    public function test_store_requires_valid_fields(): void
+    {
+        $response = $this->from(route('tasks.create'))->post(route('tasks.store'), [
+            'title' => '',
+            'status' => 'invalid-status',
+            'deadline' => 'not-a-date',
+        ]);
+
+        $response->assertRedirect(route('tasks.create'));
+        $response->assertSessionHasErrors(['title', 'status', 'deadline']);
+    }
+
+    public function test_update_requires_valid_fields(): void
+    {
+        $task = Task::factory()->create();
+
+        $response = $this->from(route('tasks.edit', $task))->put(route('tasks.update', $task), [
+            'title' => '',
+            'status' => 'invalid-status',
+            'deadline' => 'not-a-date',
+        ]);
+
+        $response->assertRedirect(route('tasks.edit', $task));
+        $response->assertSessionHasErrors(['title', 'status', 'deadline']);
+    }
 }
