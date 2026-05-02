@@ -1,63 +1,44 @@
-KIU Student Task Manager - Laravel CRUD + TODO
-==============================================
+# Exam submission — KIU Student Task Manager
 
-Setup
------
-1) Requirements: PHP >= 8.1, Composer, a MySQL/Postgres database.
-2) Install dependencies:
-   - Copy env and generate key:
-     ```
-     cp .env.example .env
-     php artisan key:generate
-     ```
-   - Configure DB connection in `.env` (DB_DATABASE, DB_USERNAME, DB_PASSWORD).
-   - Install PHP deps:
-     ```
-     composer install
-     ```
-   - (Optional) Install frontend deps for Vite assets:
-     ```
-     npm install && npm run build
-     ```
+Use **`README.md`** as the main entry point and the **`docs/`** folder for detailed guides (setup, architecture, database, testing, user guide).
 
-Database
---------
-- Run migrations and seed sample tasks:
-  ```
-  php artisan migrate --seed
-  ```
+## Submission checklist
 
-Run the app
------------
-```
+- [ ] Project runs after `composer install`, `.env` + `php artisan key:generate`, `php artisan migrate --seed`.
+- [ ] Zip includes the **full Laravel project** (or submit a **GitHub** link if allowed).
+- [ ] Include a database dump **`export.sql`** (regenerate after your final data; see [`docs/DATABASE.md`](docs/DATABASE.md)).
+- [ ] Optional: run **`php artisan test`** and mention that tests pass.
+
+## Quick commands (reference)
+
+```bash
+composer install
+cp .env.example .env
+php artisan key:generate
+# Configure DB in .env (SQLite or MySQL — see docs/SETUP.md)
+php artisan migrate --seed
 php artisan serve
 ```
-Open `http://127.0.0.1:8000` → you'll be redirected to Tasks.
 
-Features
---------
-- Full CRUD for tasks (title, description, status pending/done, deadline).
-- Toggle status (Done/Pending) via single click.
-- Filtering by status and simple search by title/description.
-- Pagination (10 per page).
-- Bootstrap-based clean UI with a layout.
+## Rubric mapping (short)
 
-DB Export (Submission)
-----------------------
-- After seeding or adding your own data, export the DB:
-  - MySQL:
-    ```
-    mysqldump -u <user> -p <database> > export.sql
-    ```
-  - Postgres:
-    ```
-    pg_dump -U <user> -d <database> -F p -f export.sql
-    ```
-- Include `export.sql` in your submission `.zip`.
+| Requirement | Where in project |
+|-------------|-------------------|
+| Laravel structure (routes, controllers, models) | `routes/web.php`, `app/Http/Controllers`, `app/Models` |
+| MVC | See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) |
+| Migration + fields | `database/migrations/2026_05_01_000000_create_tasks_table.php` |
+| Seeding | `database/seeders/DatabaseSeeder.php`, `database/factories/TaskFactory.php` |
+| Eloquent CRUD | `TaskController`, `App\Models\Task` |
+| TODO: status + filter | Toggle route + index filters (see `README.md` route table) |
+| Blade + Bootstrap | `resources/views/layouts/app.blade.php`, `resources/views/tasks/*` |
 
-Notes
------
-- All CRUD uses Eloquent (`App\Models\Task`).
-- Code follows MVC: `Task` (Model), `TaskController` (Controller), Blade views (Views).
-- No auth is required; you can add Breeze later for the final project.
+## Full documentation
 
+| File | Purpose |
+|------|---------|
+| [`README.md`](README.md) | Overview, quick start, routes summary, troubleshooting |
+| [`docs/SETUP.md`](docs/SETUP.md) | Installation, SQLite vs MySQL, verification |
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | MVC, request flow, classes |
+| [`docs/DATABASE.md`](docs/DATABASE.md) | Schema, migrations, seed, export |
+| [`docs/TESTING.md`](docs/TESTING.md) | How to run and extend tests |
+| [`docs/USER_GUIDE.md`](docs/USER_GUIDE.md) | How to use the UI |
