@@ -63,7 +63,9 @@
                     @endif
                 </td>
                 <td>{{ $task->deadline?->format('Y-m-d') ?? '—' }}</td>
-                <td>{{ $task->created_at->diffForHumans() }}</td>
+                <td>
+                    <span class="text-nowrap">{{ $task->created_at->timezone(config('app.timezone'))->format('M j, Y, g:i a') }}</span>
+                </td>
                 <td class="text-end">
                     <div class="d-flex justify-content-end flex-wrap form-actions">
                         <form action="{{ route('tasks.toggle', $task) }}" method="POST">

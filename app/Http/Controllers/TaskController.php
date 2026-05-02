@@ -22,7 +22,7 @@ class TaskController extends Controller
         $tasks = Task::query()
             ->status($status)
             ->search($q)
-            ->orderByRaw('deadline IS NULL') // put nulls last
+            ->orderByRaw('deadline IS NULL')
             ->orderBy('deadline', 'asc')
             ->orderBy('created_at', 'desc')
             ->paginate(10)

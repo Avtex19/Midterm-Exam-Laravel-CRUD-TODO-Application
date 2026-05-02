@@ -25,7 +25,7 @@
         </div>
         <div class="col-md-4 mb-3">
             <label class="form-label">Deadline</label>
-            <input type="date" name="deadline" value="{{ old('deadline') }}" class="form-control">
+            <input type="date" name="deadline" value="{{ old('deadline') }}" class="form-control" min="{{ now()->format('Y-m-d') }}">
         </div>
     </div>
     <div class="d-flex gap-2">

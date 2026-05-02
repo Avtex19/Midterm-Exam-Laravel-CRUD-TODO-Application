@@ -18,6 +18,8 @@ class StoreTaskRequest extends FormRequest
      */
     public function rules(): array
     {
-        return $this->taskRules();
+        return array_merge($this->baseTaskRules(), [
+            'deadline' => ['nullable', 'date', 'after_or_equal:today'],
+        ]);
     }
 }
