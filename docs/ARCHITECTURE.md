@@ -55,7 +55,7 @@ Benefits:
 - **`tasks/index.blade.php`**: Table of tasks, GET filter form, search field, pagination links, action buttons.
 - **`tasks/create.blade.php`** / **`tasks/edit.blade.php`**: POST forms with CSRF (and `@method('PUT')` on edit).
 
-The list orders tasks with **nearest deadlines first** and puts rows without a deadline after dated rows (`orderByRaw('deadline IS NULL')` then `deadline` ascending).
+The list orders tasks by **newest first** (`created_at` descending, then `id` descending for a stable order when timestamps match).
 
 ## Routes
 
